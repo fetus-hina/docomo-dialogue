@@ -121,42 +121,92 @@ class UserInformation {
         }
     }
 
+    /**
+     * ユーザのニックネームを取得
+     *
+     * @return string
+     */
     public function getNickname() {
         return $this->parameters['nickname'];
     }
 
+    /**
+     * ユーザのニックネーム（読み）を取得
+     *
+     * @return string
+     */
     public function getNicknameY() {
         return $this->parameters['nickname_y'];
     }
 
+    /**
+     * ユーザの性別を取得
+     *
+     * @return string
+     */
     public function getSex() {
         return $this->parameters['sex'];
     }
 
+    /**
+     * ユーザの血液型を取得
+     *
+     * @return string
+     */
     public function getBloodType() {
         return $this->parameters['bloodtype'];
     }
 
+    /**
+     * ユーザの生年月日（年）を取得
+     *
+     * @return string
+     */
     public function getBirthdateY() {
         return $this->parameters['birthdateY'];
     }
 
+    /**
+     * ユーザの生年月日（月）を取得
+     *
+     * @return string
+     */
     public function getBirthdateM() {
         return $this->parameters['birthdateM'];
     }
 
+    /**
+     * ユーザの生年月日（日）を取得
+     *
+     * @return string
+     */
     public function getBirthdateD() {
         return $this->parameters['birthdateD'];
     }
 
+    /**
+     * ユーザの年齢を取得
+     *
+     * @return string
+     */
     public function getAge() {
         return $this->parameters['age'];
     }
 
+    /**
+     * ユーザの星座を取得
+     *
+     * @return string
+     */
     public function getConstellations() {
         return $this->parameters['constellations'];
     }
 
+    /**
+     * ユーザの場所を取得
+     *
+     * @return string
+     */
     public function getPlace() {
         return $this->parameters['place'];
     }
@@ -178,14 +228,21 @@ class UserInformation {
     /**
      * ユーザのニックネーム（読み）を設定する
      *
-     * @param   string  $value              ニックネームの読み（最大20文字）
-     * @param   bool    $throw_if_too_long  設定される値が長すぎる時例外を投げるならtrue、何事もなかったかのように扱うならfalse
+     * @param   string  $value          ニックネームの読み（最大20文字）
+     * @param   bool    $throw_if_error 設定された値が異常な時例外を投げるならtrue
      * @return  object  self
      * @throws  DomainError
      */
-    public function setNicknameY($value, $throw_if_too_long = true) {
-        $this->validateStrLen($value, 20, $throw_if_too_long, 'nickname(yomi) too long');
-        $this->parameters['nickname_y'] = mb_substr($value, 0, 20, 'UTF-8');
+    public function setNicknameY($value, $throw_if_error = true) {
+        $this->validateStrLen($value, 20, $throw_if_error, 'nickname(yomi) too long');
+        $value = mb_substr($value, 0, 20, 'UTF-8');
+        if(!preg_match('/^[゠-ヿ]+$/u', $value)) {
+            if($throw_if_error) {
+                throw new DomainError('nickname(yomi) accept only katakana');
+            }
+            trigger_error('nickname(yomi) accept only katakana', E_USER_WARNING);    
+        }
+        $this->parameters['nickname_y'] = $value;
         return $this;
     }
 
