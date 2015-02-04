@@ -1,0 +1,24 @@
+{
+    "name": "jp3cki/docomo-dialogue",
+    "type": "library",
+    "description": "Wrapper for dialogue API by NTT docomo.",
+    "keywords": ["docomo", "dialogue", "api", "rest"],
+    "license": "MIT",
+    "version": "0.1.0",
+    "authors": [
+        {
+            "name": "AIZAWA Hina",
+            "email": "hina@bouhime.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "ext-mbstring": "*",
+        "ext-curl": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "jp3cki\\docomoDialogue\\": "src"
+        }
+    }
+}
