@@ -16,6 +16,9 @@
         "ext-mbstring": "*",
         "ext-curl": "*"
     },
+    "require-dev": {
+        "phpdocumentor/phpdocumentor": "2.*"
+    },
     "autoload": {
         "psr-4": {
             "jp3cki\\docomoDialogue\\": "src"
