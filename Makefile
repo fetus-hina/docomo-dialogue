@@ -18,7 +18,7 @@ update:	install-composer
 	php composer.phar update
 
 doc: install
-	vendor/phpdocumentor/phpdocumentor/bin/phpdoc -p -d ./src -t ./doc/api
+	vendor/bin/phpdoc -p -d ./src -t ./doc/api
 
 clean:
 	rm -rf doc vendor composer.phar
