@@ -1,30 +1,73 @@
 <?php
+/**
+ * 送信パラメータのうち、利用者に関するパラメータを管理するクラス
+ * @author AIZAWA Hina <hina@bouhime.com>
+ * @copyright 2015 by AIZAWA Hina <hina@bouhime.com>
+ * @license https://github.com/fetus-hina/docomo-dialogue/blob/master/LICENSE MIT
+ * @since 0.1.0
+ */
+
 namespace jp3cki\docomoDialogue;
 
+/**
+ * 送信パラメータのうち、利用者に関するパラメータを管理するクラス
+ *
+ * @property string $nickname       ニックネーム
+ * @property string $nickname_y     ニックネームの読み
+ * @property string $sex            性別
+ * @property string $bloodtype      血液型
+ * @property int    $birthdate_y    生年月日（年）
+ * @property int    $birthdate_m    生年月日（月）
+ * @property int    $birthdate_d    生年月日（日）
+ * @property int    $age            年齢
+ * @property string $constellations 星座
+ * @property string $place          ユーザの場所
+ */
 class UserInformation {
+    /** 男性 */
     const SEX_MALE      = '男';
+    /** 女性 */
     const SEX_FEMALE    = '女';
+    /** 不明/その他の性 */
     const SEX_OTHERS    = null;
 
+    /** 血液型: A */
     const BLOOD_TYPE_A  = 'A';
+    /** 血液型: B */
     const BLOOD_TYPE_B  = 'B';
+    /** 血液型: O */
     const BLOOD_TYPE_O  = 'O';
+    /** 血液型: AB */
     const BLOOD_TYPE_AB = 'AB';
+    /** 血液型: 不明 */
     const BLOOD_TYPE_UNKNOWN = null;
 
+    /** 星座: 牡羊座 */
     const CONSTELLATION_ARIES       = '牡羊座';
+    /** 星座: 牡牛座 */
     const CONSTELLATION_TAURUS      = '牡牛座';
+    /** 星座: 双子座 */
     const CONSTELLATION_GEMINI      = '双子座';
+    /** 星座: 蟹座 */
     const CONSTELLATION_CANCER      = '蟹座';
+    /** 星座: 獅子座 */
     const CONSTELLATION_LEO         = '獅子座';
+    /** 星座: 乙女座 */
     const CONSTELLATION_VIRGO       = '乙女座';
+    /** 星座: 天秤座 */
     const CONSTELLATION_LIBRA       = '天秤座';
+    /** 星座: 蠍座 */
     const CONSTELLATION_SCORPIUS    = '蠍座';
+    /** 星座: 射手座 */
     const CONSTELLATION_SAGITTARIUS = '射手座';
+    /** 星座: 山羊座 */
     const CONSTELLATION_CAPRICONUS  = '山羊座';
+    /** 星座: 水瓶座 */
     const CONSTELLATION_AQUARIUS    = '水瓶座';
+    /** 星座: 魚座 */
     const CONSTELLATION_PISCES      = '魚座';
 
+    /** @internal 送信パラメータ */
     private $parameters = [
         'nickname'          => null,                        // ユーザのニックネーム
         'nickname_y'        => null,                        // ユーザのニックネームの読み（カナ）
@@ -38,6 +81,11 @@ class UserInformation {
         'place'             => null,                        // ユーザの場所
     ];
 
+    /**
+     * @internal 場所情報として有効な地点の一覧
+     * @see setPlace()
+     * @see getPlace()
+     */
     private static $valid_places = [
         '稚内', '旭川', '留萌', '網走', '北見', '紋別', '根室', '釧路', '帯広', '室蘭', '浦河', '札幌', '岩見沢',
         '倶知安', '函館', '江差', '青森', '弘前', '深浦', 'むつ', '八戸', '秋田', '横手', '鷹巣', '盛岡', '二戸',
@@ -77,14 +125,10 @@ class UserInformation {
         switch($key) {
         case 'nickname':        return $this->getNickname();
         case 'nickname_y':      return $this->getNicknameY();
-        case 'nicknameY':       return $this->getNicknameY();
         case 'sex':             return $this->getSex();
         case 'bloodtype':       return $this->getBloodType();
-        case 'birthdateY':      return $this->getBirthdateY();
         case 'birthdate_y':     return $this->getBirthdateY();
-        case 'birthdateM':      return $this->getBirthdateM();
         case 'birthdate_m':     return $this->getBirthdateM();
-        case 'birthdateD':      return $this->getBirthdateD();
         case 'birthdate_d':     return $this->getBirthdateD();
         case 'age':             return $this->getAge();
         case 'constellations':  return $this->getConstellations();
@@ -98,21 +142,17 @@ class UserInformation {
      * @param   string  $key    プロパティ設定用のキー
      * @param   string  $value  設定する値
      *
-     * @throws  jp3cki\docomoDialogue\InvalidArgumentException  対応するキーが存在しない時
-     * @throws  jp3cki\docomoDialogue\DomainError               設定する値が異常な時
+     * @throws  InvalidArgumentException    対応するキーが存在しない時
+     * @throws  DomainError                 設定する値が異常な時
      */
     public function __set($key, $value) {
         switch($key) {
         case 'nickname':        return $this->setNickname($value);
         case 'nickname_y':      return $this->setNicknameY($value);
-        case 'nicknameY':       return $this->setNicknameY($value);
         case 'sex':             return $this->setSex($value);
         case 'bloodtype':       return $this->setBloodType($value);
-        case 'birthdateY':      return $this->setBirthdateY($value);
         case 'birthdate_y':     return $this->setBirthdateY($value);
-        case 'birthdateM':      return $this->setBirthdateM($value);
         case 'birthdate_m':     return $this->setBirthdateM($value);
-        case 'birthdateD':      return $this->setBirthdateD($value);
         case 'birthdate_d':     return $this->setBirthdateD($value);
         case 'age':             return $this->setAge($value);
         case 'constellations':  return $this->setConstellations($value);
@@ -216,7 +256,7 @@ class UserInformation {
      *
      * @param   string  $value              ニックネーム（最大10文字）
      * @param   bool    $throw_if_too_long  設定される値が長すぎる時例外を投げるならtrue、何事もなかったかのように扱うならfalse
-     * @return  object  self
+     * @return  self
      * @throws  DomainError
      */
     public function setNickname($value, $throw_if_too_long = true) {
@@ -230,7 +270,7 @@ class UserInformation {
      *
      * @param   string  $value          ニックネームの読み（最大20文字）
      * @param   bool    $throw_if_error 設定された値が異常な時例外を投げるならtrue
-     * @return  object  self
+     * @return  self
      * @throws  DomainError
      */
     public function setNicknameY($value, $throw_if_error = true) {
@@ -251,7 +291,7 @@ class UserInformation {
      *
      * @param   string  $value          ユーザの性別    SEX_MALE | SEX_FEMALE | SEX_OTHERS
      * @param   bool    $throw_if_error 設定された値が異常な時例外を投げるならtrue
-     * @return  object  self
+     * @return  self
      * @throws  DomainError
      */
     public function setSex($value, $throw_if_error = true) {
@@ -274,7 +314,7 @@ class UserInformation {
      *
      * @param   string  $value          ユーザの血液型    BLOOD_TYPE_*
      * @param   bool    $throw_if_error 設定された値が異常な時例外を投げるならtrue
-     * @return  object  self
+     * @return  self
      * @throws  DomainError
      */
     public function setBloodType($value, $throw_if_error = true) {
@@ -299,7 +339,7 @@ class UserInformation {
      *
      * @param   int     $value          ユーザの生年月日（年）
      * @param   bool    $throw_if_error 設定された値が異常な時例外を投げるならtrue
-     * @return  object  self
+     * @return  self
      * @throws  DomainError
      */
     public function setBirthdateY($value, $throw_if_error = true) {
@@ -319,7 +359,7 @@ class UserInformation {
      *
      * @param   int     $value          ユーザの生年月日（月）
      * @param   bool    $throw_if_error 設定された値が異常な時例外を投げるならtrue
-     * @return  object  self
+     * @return  self
      * @throws  DomainError
      */
     public function setBirthdateM($value, $throw_if_error = true) {
@@ -337,7 +377,7 @@ class UserInformation {
      *
      * @param   int     $value          ユーザの生年月日（日）
      * @param   bool    $throw_if_error 設定された値が異常な時例外を投げるならtrue
-     * @return  object  self
+     * @return  self
      * @throws  DomainError
      */
     public function setBirthdateD($value, $throw_if_error = true) {
@@ -355,7 +395,7 @@ class UserInformation {
      *
      * @param   int     $value          ユーザの年齢
      * @param   bool    $throw_if_error 設定された値が異常な時例外を投げるならtrue
-     * @return  object  self
+     * @return  self
      * @throws  DomainError
      */
     public function setAge($value, $throw_if_error = true) {
@@ -373,7 +413,7 @@ class UserInformation {
      *
      * @param   string  $value          ユーザの星座    CONSTELLATION_*
      * @param   bool    $throw_if_error 設定された値が異常な時例外を投げるならtrue
-     * @return  object  self
+     * @return  self
      * @throws  DomainError
      */
     public function setConstellations($value, $throw_if_error = true) {
@@ -406,7 +446,7 @@ class UserInformation {
      *
      * @param   string  $value          ユーザの場所    one of $valid_places
      * @param   bool    $throw_if_error 設定された値が異常な時例外を投げるならtrue
-     * @return  object  self
+     * @return  self
      * @throws  DomainError
      */
     public function setPlace($value, $throw_if_error = true) {

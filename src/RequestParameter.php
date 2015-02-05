@@ -1,14 +1,37 @@
 <?php
+/**
+ * 送信パラメータ管理クラス
+ * @author AIZAWA Hina <hina@bouhime.com>
+ * @copyright 2015 by AIZAWA Hina <hina@bouhime.com>
+ * @license https://github.com/fetus-hina/docomo-dialogue/blob/master/LICENSE MIT
+ * @since 0.1.0
+ */
+
 namespace jp3cki\docomoDialogue;
 
+/**
+ * 送信パラメータ管理クラス
+ *
+ * @property string $utt            ユーザ入力テキスト
+ * @property string $context        コンテキストID
+ * @property string $mode           会話モード
+ * @property int    $t              チャットキャラクター
+ * @property UserInformation $user  ユーザ情報
+ */
 class RequestParameter {
+    /** デフォルトのキャラクター */
     const CHARACTER_DEFAULT = null;
+    /** 関西弁のキャラクター */
     const CHARACTER_KANSAI  = 20;
+    /** 赤ちゃんキャラクター */
     const CHARACTER_BABY    = 30;
 
+    /** 対話モード */
     const MODE_DIALOG       = 'dialog';
+    /** しりとりモード */
     const MODE_SRTR         = 'srtr';
 
+    /** @internal */
     private $parameters = [
         'utt'       => null,
         'context'   => null,
@@ -16,7 +39,7 @@ class RequestParameter {
         't'         => self::CHARACTER_DEFAULT,
     ];
 
-    /** @var UserInformation */
+    /** @internal @var UserInformation */
     private $user_info = null;
 
     /**
@@ -40,14 +63,10 @@ class RequestParameter {
     public function __get($key) {
         switch($key) {
         case 'utt':                 return $this->getUserInput();
-        case 'user_input':          return $this->getUserInput();
         case 'context':             return $this->getContext();
-        case 't':                   return $this->getCharacter();
         case 'mode':                return $this->getMode();
-        case 'character':           return $this->getCharacter();
+        case 't':                   return $this->getCharacter();
         case 'user':                return $this->getUserInformation();
-        case 'user_info':           return $this->getUserInformation();
-        case 'user_information':    return $this->getUserInformation();
         }
     }
 
@@ -63,14 +82,10 @@ class RequestParameter {
     public function __set($key, $value) {
         switch($key) {
         case 'utt':                 return $this->setUserInput($value);
-        case 'user_input':          return $this->setUserInput($value);
         case 'context':             return $this->setContext($value);
         case 'mode':                return $this->setMode($value);
         case 't':                   return $this->setCharacter($value);
-        case 'character':           return $this->setCharacter($value);
         case 'user':                return $this->setUserInformation($value);
-        case 'user_info':           return $this->setUserInformation($value);
-        case 'user_information':    return $this->setUserInformation($value);
         default:                    throw new InvalidArgumentException("Unknown key {$key}");
         }
     }
