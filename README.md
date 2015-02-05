@@ -1,1 +1,1 @@
-[![Build Status](https://travis-ci.org/fetus-hina/docomo-dialogue.svg?branch=master)](https://travis-ci.org/fetus-hina/docomo-dialogue)
+[![Build Status](https://travis-ci.org/fetus-hina/docomo-dialogue.svg?branch=master)](https://travis-ci.org/fetus-hina/docomo-dialogue) [![Dependency Status](https://www.versioneye.com/user/projects/54d3265a3ca0840b19000153#tab-settings/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54d3265a3ca0840b19000153#tab-settings)
