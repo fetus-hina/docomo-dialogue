@@ -18,7 +18,8 @@
         "php-curl-class/php-curl-class": "~2.1"
     },
     "require-dev": {
-        "phpdocumentor/phpdocumentor": "2.*"
+        "phpdocumentor/phpdocumentor": "2.*",
+        "phpunit/phpunit": "4.4.*"
     },
     "autoload": {
         "psr-4": {

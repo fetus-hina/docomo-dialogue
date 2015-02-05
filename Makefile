@@ -20,5 +20,10 @@ update:	install-composer
 doc: install
 	vendor/bin/phpdoc -p -d ./src -t ./doc/api
 
+test: FORCE
+	vendor/bin/phpunit --bootstrap vendor/autoload.php test
+
 clean:
 	rm -rf doc vendor composer.phar
+
+FORCE:
