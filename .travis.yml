@@ -19,5 +19,5 @@ install:
   - travis_retry composer install --prefer-dist --no-interaction
 
 script:
-  - find . -name 'vendor' -prune -o -type f -name "*.php" | xargs -n 1 php -l
+  - find . -type f -name "*.php" | grep -v vendor | xargs -n 1 php -l
   - vendor/bin/phpunit --verbose test
