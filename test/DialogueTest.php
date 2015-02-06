@@ -1,6 +1,7 @@
 <?php
 use jp3cki\docomoDialogue\Dialogue;
 use jp3cki\docomoDialogue\RequestParameter;
+use jp3cki\docomoDialogue\Response;
 
 class DialogueTest extends \PHPUnit_Framework_TestCase {
     private function getApiKey() {
@@ -22,8 +23,8 @@ class DialogueTest extends \PHPUnit_Framework_TestCase {
 
     public function testParameter() {
         $o = new Dialogue('DUMMY-API-KEY');
-        $this->assertTrue($o->parameter instanceof RequestParameter);
-        $this->assertTrue($o->getParameter() instanceof RequestParameter);
+        $this->assertInstanceOf(RequestParameter::className(), $o->parameter);
+        $this->assertInstanceOf(RequestParameter::className(), $o->getParameter());
     }
 
     public function testRequest() {
@@ -35,7 +36,6 @@ class DialogueTest extends \PHPUnit_Framework_TestCase {
         $o = new Dialogue($key);
         $o->parameter->setUserInput('こんにちは');
         $o->parameter->user->setNickname('テスト');
-        $ret = $o->request();
-        $this->assertTrue(is_object($ret)); // FIXME
+        $this->assertInstanceOf(Response::className(), $o->request());
     }
 }

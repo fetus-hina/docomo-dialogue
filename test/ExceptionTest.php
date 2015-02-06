@@ -6,14 +6,12 @@ use jp3cki\docomoDialogue\InvalidArgumentException;
 class ExceptionTest extends \PHPUnit_Framework_TestCase {
     public function testHierarchy() {
         $var = new Exception();
-        $this->assertTrue($var instanceof \Exception);
+        $this->assertInstanceOf('\Exception', $var);
 
         $var = new DomainError();
-        $this->assertTrue($var instanceof \Exception);
-        $this->assertTrue($var instanceof Exception);
+        $this->assertInstanceOf(Exception::className(), $var);
 
         $var = new InvalidArgumentException();
-        $this->assertTrue($var instanceof \Exception);
-        $this->assertTrue($var instanceof Exception);
+        $this->assertInstanceOf(Exception::className(), $var);
     }
 }

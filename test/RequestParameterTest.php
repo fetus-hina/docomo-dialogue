@@ -80,7 +80,7 @@ class RequestParameterTest extends \PHPUnit_Framework_TestCase {
     public function testUserInformation() {
         $o = new RequestParameter();
         // デフォルトでちゃんと返ってくる
-        $this->assertTrue($o->getUserInformation() instanceof UserInformation);
+        $this->assertInstanceOf(UserInformation::className(), $o->getuserInformation());
     }
 
     public function testMakeParameter() {

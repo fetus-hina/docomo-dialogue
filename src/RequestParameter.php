@@ -257,4 +257,13 @@ class RequestParameter {
         trigger_error($error_message, E_USER_WARNING);
         return false;
     }
+
+    /**
+     * クラス名(FQCN)を取得
+     *
+     * return string
+     */
+    public static function className() {
+        return get_called_class();
+    }
 }

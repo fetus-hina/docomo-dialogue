@@ -76,7 +76,15 @@ class Dialogue {
             trigger_error('docomo dialogue: Error ' . $curl->error_code . ': ' . $curl->error_message, E_USER_WARNING);
             return false;
         }
-        //FIX
-        return $ret;
+        return new Response($ret);
+    }
+
+    /**
+     * クラス名(FQCN)を取得
+     *
+     * return string
+     */
+    public static function className() {
+        return get_called_class();
     }
 }

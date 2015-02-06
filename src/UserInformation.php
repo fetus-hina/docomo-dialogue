@@ -534,4 +534,14 @@ class UserInformation {
         }
         return true;
      }
+
+
+    /**
+     * クラス名(FQCN)を取得
+     *
+     * return string
+     */
+    public static function className() {
+        return get_called_class();
+    }
 }
