@@ -19,8 +19,8 @@
         "php-curl-class/php-curl-class": "~2.1"
     },
     "require-dev": {
-        "phpdocumentor/phpdocumentor": "2.*",
-        "apigen/apigen": "4.0.*"
+        "apigen/apigen": "4.0.*",
+        "phpunit/phpunit": "4.5.*@dev"
     },
     "autoload": {
         "psr-4": {
