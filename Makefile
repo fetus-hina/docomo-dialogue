@@ -5,20 +5,17 @@ all: init doc
 init: install-composer install
 
 install-composer:
-	if [ -e composer.phar ]; then \
-		php composer.phar self-update; \
-	else \
-		curl -sS https://getcomposer.org/installer | php; \
-	fi
+	if [ ! -e composer.phar ]; then curl -sS https://getcomposer.org/installer | php; fi
 
 install: install-composer
 	php composer.phar install
 
 update:	install-composer
+	php composer.phar self-update
 	php composer.phar update
 
 doc: install
-	vendor/bin/phpdoc -p -d ./src -t ./doc/api
+	vendor/bin/apigen generate --source="src" --destination="doc/api"
 
 test: FORCE
 	vendor/bin/phpunit --bootstrap vendor/autoload.php test
