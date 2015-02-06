@@ -87,4 +87,12 @@ class RequestParameterTest extends \PHPUnit_Framework_TestCase {
         $o = new RequestParameter();
         $this->assertTrue(is_array($o->makeParameter()));
     }
+
+    public function testReset() {
+        $o = new RequestParameter();
+        $o->setUserInput('あいうえお');
+        $this->assertEquals('あいうえお', $o->getUserInput());
+        $o->reset();
+        $this->assertEquals(null, $o->getUserInput());
+    }
 }

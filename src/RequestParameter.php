@@ -31,16 +31,18 @@ class RequestParameter {
     /** しりとりモード */
     const MODE_SRTR         = 'srtr';
 
-    /** @internal */
-    private $parameters = [
-        'utt'       => null,
-        'context'   => null,
-        'mode'      => self::MODE_DIALOG,
-        't'         => self::CHARACTER_DEFAULT,
-    ];
+    /** @internal @var array */
+    private $parameters;
 
     /** @internal @var UserInformation */
     private $user_info = null;
+
+    /**
+     * コンストラクタ
+     */
+    public function __construct() {
+        $this->reset();
+    }
 
     /**
      * マジックメソッド __toString
@@ -88,6 +90,22 @@ class RequestParameter {
         case 'user':                return $this->setUserInformation($value);
         default:                    throw new InvalidArgumentException("Unknown key {$key}");
         }
+    }
+
+    /**
+     * パラメータを完全にリセットする
+     *
+     * return self
+     */
+    public function reset() {
+        $this->parameters = [
+            'utt'       => null,
+            'context'   => null,
+            'mode'      => self::MODE_DIALOG,
+            't'         => self::CHARACTER_DEFAULT,
+        ];
+        $this->user_info = null;
+        return $this;
     }
 
     /**
