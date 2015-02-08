@@ -260,7 +260,7 @@ class UserInformation {
      * @throws  DomainError
      */
     public function setNickname($value, $throw_if_too_long = true) {
-        $this->validateStrLen($value, 10, $throw_if_too_long, 'nickname too long');
+        validators\String::validate($value, 10, $throw_if_too_long, 'nickname too long');
         $this->parameters['nickname'] = mb_substr($value, 0, 10, 'UTF-8');
         return $this;
     }
@@ -274,7 +274,7 @@ class UserInformation {
      * @throws  DomainError
      */
     public function setNicknameY($value, $throw_if_error = true) {
-        $this->validateStrLen($value, 20, $throw_if_error, 'nickname(yomi) too long');
+        validators\String::validate($value, 20, $throw_if_error, 'nickname(yomi) too long');
         $value = mb_substr($value, 0, 20, 'UTF-8');
         if(!preg_match('/^[゠-ヿ]+$/u', $value)) {
             if($throw_if_error) {
@@ -348,7 +348,7 @@ class UserInformation {
         } else {
             $datetime = new \DateTime('now');
             $max = (int)$datetime->format('Y');
-            $this->validateInteger($value, 1, $max, $throw_if_error, 'Invalid birthdateY');
+            validators\Number::validate($value, 1, $max, $throw_if_error, 'Invalid birthdateY');
             $this->parameters['birthdateY'] = min($max, max(1, (int)$value));
         }
         Return $this;
@@ -366,7 +366,7 @@ class UserInformation {
         if($value === null) {
             $this->parameters['birthdateM'] = null;
         } else {
-            $this->validateInteger($value, 1, 12, $throw_if_error, 'Invalid birthdateM');
+            validators\Number::validate($value, 1, 12, $throw_if_error, 'Invalid birthdateM');
             $this->parameters['birthdateM'] = min(12, max(1, (int)$value));
         }
         return $this;
@@ -384,7 +384,7 @@ class UserInformation {
         if($value === null) {
             $this->parameters['birthdateD'] = null;
         } else {
-            $this->validateInteger($value, 1, 31, $throw_if_error, 'Invalid birthdateD');
+            validators\Number::validate($value, 1, 31, $throw_if_error, 'Invalid birthdateD');
             $this->parameters['birthdateD'] = min(31, max(1, (int)$value));
         }
         return $this;
@@ -402,7 +402,7 @@ class UserInformation {
         if($value === null) {
             $this->parameters['age'] = null;
         } else {
-            $this->validateInteger($value, 0, null, $throw_if_error, 'Invalid age');
+            validators\Number::validate($value, 0, null, $throw_if_error, 'Invalid age');
             $this->parameters['age'] = max(0, (int)$value);
         }
         return $this;
@@ -477,64 +477,6 @@ class UserInformation {
         }
         return $ret;
     }
-
-    /**
-     * 文字列の長さを検査する
-     *
-     * @param   string  $value              対象にする文字列
-     * @param   int     $maxlen             許容される文字列の最大長
-     * @param   bool    $throw_if_too_long  異常時に例外を投げるなら true、警告だけして何もしないなら false
-     * @param   string  $error_message      異常時に発生する例外または警告のメッセージ
-     *
-     * @throws  DomainError
-     */
-    private function validateStrLen($value, $maxlen, $throw_if_too_long, $error_message) {
-        if(mb_strlen($value, 'UTF-8') <= $maxlen) {
-            return true;
-        }
-        if($throw_if_too_long) {
-            throw new DomainError($error_message);
-        }
-        trigger_error($error_message, E_USER_WARNING);
-        return false;
-    }
-
-    /**
-     * 整数型を検査する 
-     *
-     * @param   int     $value              対象にする数値
-     * @param   int     $min                許容する最小値
-     * @param   int     $max                許容する最大値
-     * @param   bool    $throw_if_error     異常時に例外を投げるなら true、警告だけして何もしないなら false
-     * @param   string  $error_message      異常時に発生する例外または警告のメッセージ
-     *
-     * @throws  DomainError
-     */
-    private function validateInteger($value, $min, $max, $throw_if_error, $error_message) {
-        $error = false;
-        if(!is_int($value)) {
-            if(is_string($value) && !preg_match('/^\d+$/', $value)) {
-                $error = true;
-            } else {
-                $value = (int)$value;
-            }
-        }
-        if(!$error && $min !== null && $value < $min) {
-            $error = true;
-        }
-        if(!$error && $max !== null && $value > $max) {
-            $error = true;
-        }
-        if($error) {
-            if($throw_if_error) {
-                throw new DomainError($error_message);
-            }
-            trigger_error($error_message, E_USER_WARNING);
-            return false;
-        }
-        return true;
-     }
-
 
     /**
      * クラス名(FQCN)を取得

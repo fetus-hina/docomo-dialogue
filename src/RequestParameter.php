@@ -164,7 +164,7 @@ class RequestParameter {
      * @return  self
      */
     public function setUserInput($value, $throw_if_error = true) {
-        $this->validateStrLen($value, 255, $throw_if_error, 'User input too long');
+        validators\String::validate($value, 255, $throw_if_error, 'User input too long');
         $value = mb_substr($value, 0, 255, 'UTF-8');
         $this->parameters['utt'] = $value;
         return $this;
@@ -178,7 +178,7 @@ class RequestParameter {
      * @return  self
      */
     public function setContext($value, $throw_if_error = true) {
-        $this->validateStrLen($value, 255, $throw_if_error, 'Context id too long');
+        validators\String::validate($value, 255, $throw_if_error, 'Context id too long');
         $value = mb_substr($value, 0, 255, 'UTF-8');
         $this->parameters['context'] = $value;
         return $this;
@@ -253,27 +253,6 @@ class RequestParameter {
             }
         }
         return array_merge($ret, $this->getUserInformation()->makeParameter());
-    }
-
-    /**
-     * 文字列の長さを検査する
-     *
-     * @param   string  $value              対象にする文字列
-     * @param   int     $maxlen             許容される文字列の最大長
-     * @param   bool    $throw_if_too_long  異常時に例外を投げるなら true、警告だけして何もしないなら false
-     * @param   string  $error_message      異常時に発生する例外または警告のメッセージ
-     *
-     * @throws  DomainError
-     */
-    private function validateStrLen($value, $maxlen, $throw_if_too_long, $error_message) {
-        if(mb_strlen($value, 'UTF-8') <= $maxlen) {
-            return true;
-        }
-        if($throw_if_too_long) {
-            throw new DomainError($error_message);
-        }
-        trigger_error($error_message, E_USER_WARNING);
-        return false;
     }
 
     /**
