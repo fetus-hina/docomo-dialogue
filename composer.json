@@ -20,7 +20,7 @@
     },
     "require-dev": {
         "apigen/apigen": "4.0.*",
-        "phpunit/phpunit": "4.5.*@dev"
+        "phpunit/phpunit": "4.5.*"
     },
     "autoload": {
         "psr-4": {
