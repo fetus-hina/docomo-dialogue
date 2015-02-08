@@ -18,7 +18,14 @@ docomo-dialogue
 
 [Composer](https://getcomposer.org/)経由でのインストールと利用をおすすめします。
 
-Composer を使える状態になったら、あなたのプロジェクトの composer.json に次の設定を加えます。妥当な JSON となるように注意してください。
+Composer を使える状態になったら、次のコマンドを実行します。
+
+```
+php composer.phar require jp3cki/docomo-dialogue
+```
+
+あるいは、手動で composer.json を編集します。
+妥当な JSON となるように注意してください。
 また、既に require が存在する場合には中身だけを書き加えてください。
 
 ```json
