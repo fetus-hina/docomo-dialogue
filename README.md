@@ -1,7 +1,9 @@
 docomo-dialogue
 ===============
 
+[![License](https://poser.pugx.org/jp3cki/docomo-dialogue/license.svg)](https://packagist.org/packages/jp3cki/docomo-dialogue)
 [![Build Status](https://travis-ci.org/fetus-hina/docomo-dialogue.svg?branch=master)](https://travis-ci.org/fetus-hina/docomo-dialogue)
+[![Latest Stable Version](https://poser.pugx.org/jp3cki/docomo-dialogue/v/stable.svg)](https://packagist.org/packages/jp3cki/docomo-dialogue)
 [![Dependency Status](https://www.versioneye.com/user/projects/54d3265a3ca0840b19000153/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54d3265a3ca0840b19000153#tab-settings/badge.svg)
 
 [NTT docomo](https://www.nttdocomo.co.jp/) から提供されている、
