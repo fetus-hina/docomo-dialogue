@@ -76,7 +76,7 @@ class RequestParameter {
      * マジックメソッド __set
      *
      * @param   string  $key    プロパティ設定用のキー
-     * @param   string  $value  設定する値
+     * @param   mixed   $value  設定する値
      *
      * @throws  InvalidArgumentException    対応するキーが存在しない時
      * @throws  DomainError                 設定する値が異常な時
@@ -232,10 +232,9 @@ class RequestParameter {
      * ユーザ情報を設定
      *
      * @param   UserInformation $value      ユーザ情報
-     * @param   bool    $throw_if_error     trueなら異常時に例外を投げる
      * @return  self
      */
-    public function setUserInformation(UserInformation $value, $throw_if_error = true) {
+    public function setUserInformation(UserInformation $value) {
         $this->user_info = $value;
         return $this;
     }
