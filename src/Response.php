@@ -56,7 +56,13 @@ class Response {
      * @return string
      */
     public function __toString() {
-        return json_encode($this->makeParameter(), JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+        $data = [];
+        foreach($this->parameters as $k => $v) {
+            if($v !== null) {
+                $data[$k] = $v;
+            }
+        }
+        return json_encode($data, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
     }
 
     /**
