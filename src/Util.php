@@ -23,10 +23,10 @@ class Util {
      * @link    http://php.net/manual/ja/function.mb-substitute-character.php mb_substitute_character
      */
     public static function toSjisSafe($text, $substrchar = 0x3013) {
-        $old_substrchar = mb_substitute_character();
+        $oldSubstrchar = mb_substitute_character();
         mb_substitute_character($substrchar);
         $ret = mb_convert_encoding(mb_convert_encoding($text, 'CP932', 'UTF-8'), 'UTF-8', 'CP932');
-        mb_substitute_character($old_substrchar);
+        mb_substitute_character($oldSubstrchar);
         return $ret;
     }
 

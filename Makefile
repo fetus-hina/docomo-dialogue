@@ -19,6 +19,9 @@ doc: depends-install
 test:
 	vendor/bin/phpunit --bootstrap vendor/autoload.php test
 
+phpmd:
+	vendor/bin/phpmd src text codesize,design,naming,unusedcode
+
 clean:
 	rm -rf doc vendor composer.phar
 

@@ -22,6 +22,8 @@ namespace jp3cki\docomoDialogue;
  * @property int    $age            年齢
  * @property string $constellations 星座
  * @property string $place          ユーザの場所
+ *
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class UserInformation {
     /** 男性 */
@@ -86,7 +88,7 @@ class UserInformation {
      * @see setPlace()
      * @see getPlace()
      */
-    private static $valid_places = [
+    private static $validPlaces = [
         '稚内', '旭川', '留萌', '網走', '北見', '紋別', '根室', '釧路', '帯広', '室蘭', '浦河', '札幌', '岩見沢',
         '倶知安', '函館', '江差', '青森', '弘前', '深浦', 'むつ', '八戸', '秋田', '横手', '鷹巣', '盛岡', '二戸',
         '一関', '宮古', '大船渡', '山形', '米沢', '酒田', '新庄', '仙台', '古川', '石巻', '白石', '福島', '郡山',
@@ -120,6 +122,8 @@ class UserInformation {
      *
      * @param   string  $key    プロパティ取得用のキー
      * @return  string          キーに対応する値
+     *
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     public function __get($key) {
         switch($key) {
@@ -144,6 +148,8 @@ class UserInformation {
      *
      * @throws  InvalidArgumentException    対応するキーが存在しない時
      * @throws  DomainError                 設定する値が異常な時
+     *
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     public function __set($key, $value) {
         switch($key) {
@@ -255,12 +261,11 @@ class UserInformation {
      * ユーザのニックネームを設定する
      *
      * @param   string  $value              ニックネーム（最大10文字）
-     * @param   bool    $throw_if_too_long  設定される値が長すぎる時例外を投げるならtrue、何事もなかったかのように扱うならfalse
      * @return  self
      * @throws  DomainError
      */
-    public function setNickname($value, $throw_if_too_long = true) {
-        validators\String::validate($value, 10, $throw_if_too_long, 'nickname too long');
+    public function setNickname($value) {
+        validators\String::validate($value, 10, 'nickname too long');
         $this->parameters['nickname'] = mb_substr($value, 0, 10, 'UTF-8');
         return $this;
     }
@@ -269,18 +274,14 @@ class UserInformation {
      * ユーザのニックネーム（読み）を設定する
      *
      * @param   string  $value          ニックネームの読み（最大20文字）
-     * @param   bool    $throw_if_error 設定された値が異常な時例外を投げるならtrue
      * @return  self
      * @throws  DomainError
      */
-    public function setNicknameY($value, $throw_if_error = true) {
-        validators\String::validate($value, 20, $throw_if_error, 'nickname(yomi) too long');
+    public function setNicknameY($value) {
+        validators\String::validate($value, 20, 'nickname(yomi) too long');
         $value = mb_substr($value, 0, 20, 'UTF-8');
         if(!preg_match('/^[゠-ヿ]+$/u', $value)) {
-            if($throw_if_error) {
-                throw new DomainError('nickname(yomi) accept only katakana');
-            }
-            trigger_error('nickname(yomi) accept only katakana', E_USER_WARNING);    
+            throw new DomainError('nickname(yomi) accept only katakana');
         }
         $this->parameters['nickname_y'] = $value;
         return $this;
@@ -290,20 +291,15 @@ class UserInformation {
      * ユーザの性別を設定する
      *
      * @param   string  $value          ユーザの性別    SEX_MALE | SEX_FEMALE | SEX_OTHERS
-     * @param   bool    $throw_if_error 設定された値が異常な時例外を投げるならtrue
      * @return  self
      * @throws  DomainError
      */
-    public function setSex($value, $throw_if_error = true) {
+    public function setSex($value) {
         if($value !== self::SEX_MALE &&
            $value !== self::SEX_FEMALE &&
            $value !== self::SEX_OTHERS)
         {
-            if($throw_if_error) {
-                throw new DomainError("Invalid sex");
-            }
-            trigger_error("Invalid sex", E_USER_WARNING);
-            $value = self::SEX_OTHERS;
+            throw new DomainError("Invalid sex");
         }
         $this->parameters['sex'] = $value;
         return $this;
@@ -313,22 +309,17 @@ class UserInformation {
      * ユーザの血液型を設定する
      *
      * @param   string  $value          ユーザの血液型    BLOOD_TYPE_*
-     * @param   bool    $throw_if_error 設定された値が異常な時例外を投げるならtrue
      * @return  self
      * @throws  DomainError
      */
-    public function setBloodType($value, $throw_if_error = true) {
+    public function setBloodType($value) {
         if($value !== self::BLOOD_TYPE_A &&
            $value !== self::BLOOD_TYPE_B &&
            $value !== self::BLOOD_TYPE_O &&
            $value !== self::BLOOD_TYPE_AB &&
            $value !== self::BLOOD_TYPE_UNKNOWN)
         {
-            if($throw_if_error) {
-                throw new DomainError("Invalid bloodtype");
-            }
-            trigger_error("Invalid bloodtype", E_USER_WARNING);
-            $value = self::BLOOD_TYPE_UNKNOWN;
+            throw new DomainError("Invalid bloodtype");
         }
         $this->parameters['bloodtype'] = $value;
         return $this;
@@ -338,17 +329,16 @@ class UserInformation {
      * ユーザの生年月日(年)を設定する
      *
      * @param   int     $value          ユーザの生年月日（年）
-     * @param   bool    $throw_if_error 設定された値が異常な時例外を投げるならtrue
      * @return  self
      * @throws  DomainError
      */
-    public function setBirthdateY($value, $throw_if_error = true) {
+    public function setBirthdateY($value) {
         if($value === null) {
             $this->parameters['birthdateY'] = null;
         } else {
             $datetime = new \DateTime('now');
             $max = (int)$datetime->format('Y');
-            validators\Number::validate($value, 1, $max, $throw_if_error, 'Invalid birthdateY');
+            validators\Number::validate($value, 1, $max, 'Invalid birthdateY');
             $this->parameters['birthdateY'] = min($max, max(1, (int)$value));
         }
         Return $this;
@@ -358,15 +348,14 @@ class UserInformation {
      * ユーザの生年月日(月)を設定する
      *
      * @param   int     $value          ユーザの生年月日（月）
-     * @param   bool    $throw_if_error 設定された値が異常な時例外を投げるならtrue
      * @return  self
      * @throws  DomainError
      */
-    public function setBirthdateM($value, $throw_if_error = true) {
+    public function setBirthdateM($value) {
         if($value === null) {
             $this->parameters['birthdateM'] = null;
         } else {
-            validators\Number::validate($value, 1, 12, $throw_if_error, 'Invalid birthdateM');
+            validators\Number::validate($value, 1, 12, 'Invalid birthdateM');
             $this->parameters['birthdateM'] = min(12, max(1, (int)$value));
         }
         return $this;
@@ -376,15 +365,14 @@ class UserInformation {
      * ユーザの生年月日(日)を設定する
      *
      * @param   int     $value          ユーザの生年月日（日）
-     * @param   bool    $throw_if_error 設定された値が異常な時例外を投げるならtrue
      * @return  self
      * @throws  DomainError
      */
-    public function setBirthdateD($value, $throw_if_error = true) {
+    public function setBirthdateD($value) {
         if($value === null) {
             $this->parameters['birthdateD'] = null;
         } else {
-            validators\Number::validate($value, 1, 31, $throw_if_error, 'Invalid birthdateD');
+            validators\Number::validate($value, 1, 31, 'Invalid birthdateD');
             $this->parameters['birthdateD'] = min(31, max(1, (int)$value));
         }
         return $this;
@@ -394,15 +382,14 @@ class UserInformation {
      * ユーザの年齢を設定する
      *
      * @param   int     $value          ユーザの年齢
-     * @param   bool    $throw_if_error 設定された値が異常な時例外を投げるならtrue
      * @return  self
      * @throws  DomainError
      */
-    public function setAge($value, $throw_if_error = true) {
+    public function setAge($value) {
         if($value === null) {
             $this->parameters['age'] = null;
         } else {
-            validators\Number::validate($value, 0, null, $throw_if_error, 'Invalid age');
+            validators\Number::validate($value, 0, null, 'Invalid age');
             $this->parameters['age'] = max(0, (int)$value);
         }
         return $this;
@@ -412,30 +399,26 @@ class UserInformation {
      * ユーザの星座を設定する
      *
      * @param   string  $value          ユーザの星座    CONSTELLATION_*
-     * @param   bool    $throw_if_error 設定された値が異常な時例外を投げるならtrue
      * @return  self
      * @throws  DomainError
      */
-    public function setConstellations($value, $throw_if_error = true) {
-        if($value !== null &&
-           $value !== self::CONSTELLATION_ARIES &&
-           $value !== self::CONSTELLATION_TAURUS &&
-           $value !== self::CONSTELLATION_GEMINI &&
-           $value !== self::CONSTELLATION_CANCER &&
-           $value !== self::CONSTELLATION_LEO &&
-           $value !== self::CONSTELLATION_VIRGO &&
-           $value !== self::CONSTELLATION_LIBRA &&
-           $value !== self::CONSTELLATION_SCORPIUS &&
-           $value !== self::CONSTELLATION_SAGITTARIUS &&
-           $value !== self::CONSTELLATION_CAPRICONUS &&
-           $value !== self::CONSTELLATION_AQUARIUS &&
-           $value !== self::CONSTELLATION_PISCES)
-        {
-            if($throw_if_error) {
-                throw new DomainError('Invalid constellations');
-            }
-            trigger_error('Invalid constellations', E_USER_WARNING);
-            $value = null;
+    public function setConstellations($value) {
+        if($value !== null && !in_array($value, [
+                self::CONSTELLATION_ARIES,
+                self::CONSTELLATION_TAURUS,
+                self::CONSTELLATION_GEMINI,
+                self::CONSTELLATION_CANCER,
+                self::CONSTELLATION_LEO,
+                self::CONSTELLATION_VIRGO,
+                self::CONSTELLATION_LIBRA,
+                self::CONSTELLATION_SCORPIUS,
+                self::CONSTELLATION_SAGITTARIUS,
+                self::CONSTELLATION_CAPRICONUS,
+                self::CONSTELLATION_AQUARIUS,
+                self::CONSTELLATION_PISCES,
+            ])
+        ) {
+            throw new DomainError('Invalid constellations');
         }
         $this->parameters['constellations'] = $value;
         return $this;
@@ -444,20 +427,15 @@ class UserInformation {
     /**
      * ユーザの場所を設定する
      *
-     * @param   string  $value          ユーザの場所    one of $valid_places
-     * @param   bool    $throw_if_error 設定された値が異常な時例外を投げるならtrue
+     * @param   string  $value          ユーザの場所    one of $validPlaces
      * @return  self
      * @throws  DomainError
      */
-    public function setPlace($value, $throw_if_error = true) {
+    public function setPlace($value) {
         if($value !== null &&
-           !in_array($value, self::$valid_places, true))
+           !in_array($value, self::$validPlaces, true))
         {
-            if($throw_if_error) {
-                throw new DomainError('Invalid place');
-            }
-            trigger_error('Invalid place', E_USER_WARNING);
-            $value = null;
+            throw new DomainError('Invalid place');
         }
         $this->parameters['place'] = $value;
         return $this;

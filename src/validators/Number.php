@@ -19,32 +19,21 @@ class Number {
      * @param   int     $value              対象にする数値
      * @param   int     $min                許容する最小値
      * @param   int     $max                許容する最大値
-     * @param   bool    $throw_if_error     異常時に例外を投げるなら true、警告だけして何もしないなら false
-     * @param   string  $error_message      異常時に発生する例外または警告のメッセージ
+     * @param   string  $errorMessage       異常時に発生する例外のメッセージ
+     * @return  bool
      *
      * @throws  \jp3cki\docomoDialogue\DomainError
      */
-    public static function validate($value, $min, $max, $throw_if_error, $error_message) {
-        $error = false;
-        if(!is_int($value)) {
-            if(is_string($value) && !preg_match('/^\d+$/', $value)) {
-                $error = true;
-            } else {
-                $value = (int)$value;
-            }
+    public static function validate($value, $min, $max, $errorMessage) {
+        if(is_string($value) && !preg_match('/^\d+$/', $value)) {
+            throw new DomainError($errorMessage);
         }
-        if(!$error && $min !== null && $value < $min) {
-            $error = true;
+        $value = (int)$value;
+        if($min !== null && $value < $min) {
+            throw new DomainError($errorMessage);
         }
-        if(!$error && $max !== null && $value > $max) {
-            $error = true;
-        }
-        if($error) {
-            if($throw_if_error) {
-                throw new DomainError($error_message);
-            }
-            trigger_error($error_message, E_USER_WARNING);
-            return false;
+        if($max !== null && $value > $max) {
+            throw new DomainError($errorMessage);
         }
         return true;
      }

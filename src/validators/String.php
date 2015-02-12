@@ -17,21 +17,16 @@ class String {
      * 文字列を検査する
      *
      * @param   string  $value              対象にする文字列
-     * @param   int     $maxlen             許容される文字列の最大長
-     * @param   bool    $throw_if_too_long  異常時に例外を投げるなら true、警告だけして何もしないなら false
-     * @param   string  $error_message      異常時に発生する例外または警告のメッセージ
+     * @param   int     $maxLen             許容される文字列の最大長
+     * @param   string  $errorMessage       異常時に発生する例外のメッセージ
      *
      * @throws  \jp3cki\docomoDialogue\DomainError
      */
-    public static function validate($value, $maxlen, $throw_if_too_long, $error_message) {
-        if(mb_strlen($value, 'UTF-8') <= $maxlen) {
+    public static function validate($value, $maxLen, $errorMessage) {
+        if(mb_strlen($value, 'UTF-8') <= $maxLen) {
             return true;
         }
-        if($throw_if_too_long) {
-            throw new DomainError($error_message);
-        }
-        trigger_error($error_message, E_USER_WARNING);
-        return false;
+        throw new DomainError($errorMessage);
     }
 
     /**
