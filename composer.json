@@ -4,7 +4,7 @@
     "description": "Wrapper for dialogue API by NTT docomo.",
     "keywords": ["docomo", "dialogue", "api", "rest"],
     "license": "MIT",
-    "version": "1.0.2",
+    "version": "1.1.0-alpha1",
     "authors": [
         {
             "name": "AIZAWA Hina",
@@ -20,7 +20,8 @@
     },
     "require-dev": {
         "apigen/apigen": "4.0.*",
-        "phpunit/phpunit": "4.5.*"
+        "phpunit/phpunit": "4.5.*",
+        "phpmd/phpmd": "~2.2"
     },
     "autoload": {
         "psr-4": {

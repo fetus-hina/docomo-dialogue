@@ -66,12 +66,12 @@ class Dialogue {
      * @return Response|false
      */
     public function request() {
-        $req_url = sprintf('%s?APIKEY=%s', self::END_POINT_URL, rawurlencode($this->apikey));
-        $req_body = json_encode($this->getParameter()->makeParameter());
+        $reqUrl = sprintf('%s?APIKEY=%s', self::END_POINT_URL, rawurlencode($this->apikey));
+        $reqBody = json_encode($this->getParameter()->makeParameter());
 
         $curl = new Curl();
         $curl->setHeader('Content-Type', 'application/json; charset=UTF-8');
-        $ret = $curl->post($req_url, $req_body);
+        $ret = $curl->post($reqUrl, $reqBody);
         if($curl->error) {
             trigger_error('docomo dialogue: Error ' . $curl->error_code . ': ' . $curl->error_message, E_USER_WARNING);
             return false;

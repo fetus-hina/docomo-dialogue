@@ -21,3 +21,4 @@ install:
 script:
   - find . -type f -name "*.php" | grep -v vendor | xargs -n 1 php -l
   - vendor/bin/phpunit --verbose test
+  - make phpmd

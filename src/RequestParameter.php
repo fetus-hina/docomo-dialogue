@@ -160,11 +160,11 @@ class RequestParameter {
      * ユーザ入力テキストを設定
      *
      * @param   string  $value          テキスト
-     * @param   bool    $throw_if_error trueなら異常時に例外を投げる
      * @return  self
+     * @throws  DomainError
      */
-    public function setUserInput($value, $throw_if_error = true) {
-        validators\String::validate($value, 255, $throw_if_error, 'User input too long');
+    public function setUserInput($value) {
+        validators\String::validate($value, 255, 'User input too long');
         $value = mb_substr($value, 0, 255, 'UTF-8');
         $this->parameters['utt'] = $value;
         return $this;
@@ -174,11 +174,10 @@ class RequestParameter {
      * コンテキストIDを設定
      *
      * @param   string  $value          コンテキストID
-     * @param   bool    $throw_if_error trueなら異常時に例外を投げる
      * @return  self
      */
-    public function setContext($value, $throw_if_error = true) {
-        validators\String::validate($value, 255, $throw_if_error, 'Context id too long');
+    public function setContext($value) {
+        validators\String::validate($value, 255, 'Context id too long');
         $value = mb_substr($value, 0, 255, 'UTF-8');
         $this->parameters['context'] = $value;
         return $this;
@@ -188,19 +187,14 @@ class RequestParameter {
      * 対話モードを設定
      *
      * @param   string  $value          対話モード  MODE_DIALOG | MODE_SRTR
-     * @param   bool    $throw_if_error trueなら異常時に例外を投げる
      * @return  self
      */
-    public function setMode($value, $throw_if_error = true) {
+    public function setMode($value) {
         if($value !== null &&
            $value !== self::MODE_DIALOG &&
            $value !== self::MODE_SRTR)
         {
-            if($throw_if_error) {
-                throw new DomainError('Invalid mode');
-            }
-            trigger_error('Invalid mode', E_USER_WARNING);
-            $value = null;
+            throw new DomainError('Invalid mode');
         }
         $this->parameters['mode'] = $value;
         return $this;
@@ -210,19 +204,14 @@ class RequestParameter {
      * キャラクタIDを設定
      *
      * @param   int     $value          キャラクタID    CHARACTER_DEFAULT | CHARACTER_KANSAI | CHARACTER_BABY
-     * @param   bool    $throw_if_error trueなら異常時に例外を投げる
      * @return  self
      */
-    public function setCharacter($value, $throw_if_error = true) {
+    public function setCharacter($value) {
         if($value !== self::CHARACTER_DEFAULT &&
            $value !== self::CHARACTER_KANSAI &&
            $value !== self::CHARACTER_BABY)
         {
-            if($throw_if_error) {
-                throw new DomainError('Invalid character');
-            }
-            trigger_error('Invalid character', E_USER_WARNING);
-            $value = self::CHARACTER_DEFAULT;
+            throw new DomainError('Invalid character');
         }
         $this->parameters['t'] = $value;
         return $this;
