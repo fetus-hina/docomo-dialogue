@@ -2,25 +2,27 @@ SHELL := /bin/bash
 
 all: init doc
 
-init: install-composer install
+init: install-composer depends-install
 
-install-composer:
-	if [ ! -e composer.phar ]; then curl -sS https://getcomposer.org/installer | php; fi
+install-composer: composer.phar
 
-install: install-composer
+depends-install: install-composer
 	php composer.phar install
 
-update:	install-composer
+depends-update: install-composer
 	php composer.phar self-update
 	php composer.phar update
 
-doc: install
+doc: depends-install
 	vendor/bin/apigen generate --source="src" --destination="doc/api"
 
-test: FORCE
+test:
 	vendor/bin/phpunit --bootstrap vendor/autoload.php test
 
 clean:
 	rm -rf doc vendor composer.phar
 
-FORCE:
+composer.phar:
+	curl -sS https://getcomposer.org/installer | php
+
+.PHONY: all init install-composer depends-install depends-update doc test clean
