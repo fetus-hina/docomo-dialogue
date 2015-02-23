@@ -16,6 +16,10 @@ class DialogueTest extends \PHPUnit_Framework_TestCase {
         return $ini['docomo']['dialogue_api_key'];
     }
 
+    public function testClassName() {
+        $this->assertEquals('jp3cki\docomoDialogue\Dialogue', Dialogue::className());
+    }
+
     public function testConstruct() {
         $o = new Dialogue('DUMMY-API-KEY');
         $this->assertEquals('DUMMY-API-KEY', $o->apikey);
@@ -25,6 +29,7 @@ class DialogueTest extends \PHPUnit_Framework_TestCase {
         $o = new Dialogue('DUMMY-API-KEY');
         $this->assertInstanceOf(RequestParameter::className(), $o->parameter);
         $this->assertInstanceOf(RequestParameter::className(), $o->getParameter());
+        $this->assertNull($o->hoge);
     }
 
     public function testRequest() {
