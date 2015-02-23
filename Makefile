@@ -17,7 +17,7 @@ doc: depends-install
 	vendor/bin/apigen generate --source="src" --destination="doc/api"
 
 test:
-	vendor/bin/phpunit --bootstrap vendor/autoload.php test
+	vendor/bin/phpunit
 
 phpmd:
 	vendor/bin/phpmd src text codesize,design,naming,unusedcode
