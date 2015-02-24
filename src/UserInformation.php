@@ -450,7 +450,7 @@ class UserInformation {
         $ret = [];
         foreach($this->parameters as $k => $v) {
             if($v !== null) {
-                $ret[$k] = is_string($v) ? Util::toSjisSafe($v) : $v;
+                $ret[$k] = $v;
             }
         }
         return $ret;
