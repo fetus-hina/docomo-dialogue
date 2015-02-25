@@ -3,6 +3,38 @@ use jp3cki\docomoDialogue\RequestParameter;
 use jp3cki\docomoDialogue\UserInformation;
 
 class RequestParameterTest extends \PHPUnit_Framework_TestCase {
+    public function testMagicGetSet() {
+        $o = new RequestParameter();
+        $o->utt = 'あいうえお';
+        $this->assertEquals('あいうえお', $o->utt);
+        $o->utt = 'かきくけこ';
+        $this->assertEquals('かきくけこ', $o->utt);
+
+        $o->context = 'abcdefg';
+        $this->assertEquals('abcdefg', $o->context);
+        $o->context = '12345';
+        $this->assertEquals('12345', $o->context);
+
+        $o->mode = 'dialog';
+        $this->assertEquals('dialog', $o->mode);
+        $o->mode = 'srtr';
+        $this->assertEquals('srtr', $o->mode);
+
+        $o->t = RequestParameter::CHARACTER_KANSAI;
+        $this->assertEquals(RequestParameter::CHARACTER_KANSAI, $o->t);
+        $o->t = RequestParameter::CHARACTER_BABY;
+        $this->assertEquals(RequestParameter::CHARACTER_BABY, $o->t);
+
+        $this->assertInstanceOf('\jp3cki\docomoDialogue\UserInformation', $o->user);
+        $this->assertNull($o->hoge);
+    }
+
+    public function testUnknownKeySet() {
+        $this->setExpectedException('\jp3cki\docomoDialogue\InvalidArgumentException');
+        $o = new RequestParameter();
+        $o->hoge = 42;
+    }
+
     public function testUserInput() {
         $o = new RequestParameter();
         $p = $o->setUserInput('あいうえお');
@@ -94,5 +126,12 @@ class RequestParameterTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals('あいうえお', $o->getUserInput());
         $o->reset();
         $this->assertEquals(null, $o->getUserInput());
+    }
+
+    public function testToString() {
+        $o = new RequestParameter();
+        $o->setUserInput('あいうえお');
+        $this->assertTrue(is_string($o->__toString()));
+        $this->assertNotEmpty($o->__toString());
     }
 }
