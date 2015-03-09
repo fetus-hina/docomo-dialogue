@@ -35,7 +35,7 @@ php composer.phar require jp3cki/docomo-dialogue
 
 ```json
     "require": {
-        "jp3cki/docomo-dialogue": "1.0.*"
+        "jp3cki/docomo-dialogue": "~1.0"
     }
 ```
 
