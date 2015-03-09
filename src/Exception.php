@@ -12,13 +12,15 @@ namespace jp3cki\docomoDialogue;
 /**
  * 例外ベースクラス
  */
-class Exception extends \Exception {
+class Exception extends \Exception
+{
     /**
      * クラス名(FQCN)を取得
      *
      * return string
      */
-    public static function className() {
+    public static function className()
+    {
         return get_called_class();
     }
 }

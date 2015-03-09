@@ -12,5 +12,6 @@ namespace jp3cki\docomoDialogue;
 /**
  * InvalidArgumentException
  */
-class InvalidArgumentException extends Exception {
+class InvalidArgumentException extends Exception
+{
 }

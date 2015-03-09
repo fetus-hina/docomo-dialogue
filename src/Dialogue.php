@@ -8,6 +8,7 @@
  */
 
 namespace jp3cki\docomoDialogue;
+
 use \Curl\Curl;
 
 /**
@@ -16,7 +17,8 @@ use \Curl\Curl;
  * @property-read   string              $apikey     docomo API Key
  * @property-read   RequestParameter    $parameter  送信パラメータ管理クラス
  */
-class Dialogue {
+class Dialogue
+{
     /** docomo側エンドポイントURL */
     const END_POINT_URL = 'https://api.apigw.smt.docomo.ne.jp/dialogue/v1/dialogue';
 
@@ -31,7 +33,8 @@ class Dialogue {
      *
      * @param string $apikey docomo API Key
      */
-    public function __construct($apikey) {
+    public function __construct($apikey)
+    {
         $this->apikey = $apikey;
     }
 
@@ -41,10 +44,13 @@ class Dialogue {
      * @param string $key プロパティ名
      * @return mixed
      */
-    public function __get($key) {
+    public function __get($key)
+    {
         switch($key) {
-        case 'apikey':      return $this->apikey;
-        case 'parameter':   return $this->getParameter();
+            case 'apikey':
+                return $this->apikey;
+            case 'parameter':
+                return $this->getParameter();
         }
     }
 
@@ -53,8 +59,9 @@ class Dialogue {
      *
      * @return RequestParameter
      */
-    public function getParameter() {
-        if(!$this->request) {
+    public function getParameter()
+    {
+        if (!$this->request) {
             $this->request = new RequestParameter();
         }
         return $this->request;
@@ -65,14 +72,15 @@ class Dialogue {
      *
      * @return Response|false
      */
-    public function request() {
+    public function request()
+    {
         $reqUrl = sprintf('%s?APIKEY=%s', self::END_POINT_URL, rawurlencode($this->apikey));
         $reqBody = json_encode($this->getParameter()->makeParameter());
 
         $curl = new Curl();
         $curl->setHeader('Content-Type', 'application/json; charset=UTF-8');
         $ret = $curl->post($reqUrl, $reqBody);
-        if($curl->error) {
+        if ($curl->error) {
             trigger_error('docomo dialogue: Error ' . $curl->error_code . ': ' . $curl->error_message, E_USER_WARNING);
             return false;
         }
@@ -84,7 +92,8 @@ class Dialogue {
      *
      * return string
      */
-    public static function className() {
+    public static function className()
+    {
         return get_called_class();
     }
 }

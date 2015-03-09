@@ -19,8 +19,12 @@ doc: depends-install
 test:
 	vendor/bin/phpunit
 
-phpmd:
+check-style:
 	vendor/bin/phpmd src text codesize,design,naming,unusedcode
+	vendor/bin/phpcs --standard=PSR2 src test
+
+fix-style:
+	vendor/bin/phpcbf --standard=PSR2 src test
 
 clean:
 	rm -rf doc vendor composer.phar

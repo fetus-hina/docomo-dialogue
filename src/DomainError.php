@@ -12,5 +12,6 @@ namespace jp3cki\docomoDialogue;
 /**
  * DomainError Exception
  */
-class DomainError extends Exception {
+class DomainError extends Exception
+{
 }

@@ -7,14 +7,16 @@
  */
 
 namespace jp3cki\docomoDialogue\validators;
+
 use jp3cki\docomoDialogue\DomainError;
 
 /**
  * 数値のバリデータ
  */
-class Number {
+class Number
+{
     /**
-     * 数値型を検査する 
+     * 数値型を検査する
      *
      * @param   int     $value              対象にする数値
      * @param   int     $min                許容する最小値
@@ -24,26 +26,28 @@ class Number {
      *
      * @throws  \jp3cki\docomoDialogue\DomainError
      */
-    public static function validate($value, $min, $max, $errorMessage) {
-        if(is_string($value) && !preg_match('/^\d+$/', $value)) {
+    public static function validate($value, $min, $max, $errorMessage)
+    {
+        if (is_string($value) && !preg_match('/^\d+$/', $value)) {
             throw new DomainError($errorMessage);
         }
         $value = (int)$value;
-        if($min !== null && $value < $min) {
+        if ($min !== null && $value < $min) {
             throw new DomainError($errorMessage);
         }
-        if($max !== null && $value > $max) {
+        if ($max !== null && $value > $max) {
             throw new DomainError($errorMessage);
         }
         return true;
-     }
+    }
 
     /**
      * クラス名(FQCN)を取得
      *
      * return string
      */
-    public static function className() {
+    public static function className()
+    {
         return get_called_class();
     }
 }

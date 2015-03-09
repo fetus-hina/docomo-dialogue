@@ -1,9 +1,13 @@
 <?php
+namespace jp3cki\docomoDialogue\test;
+
 use jp3cki\docomoDialogue\RequestParameter;
 use jp3cki\docomoDialogue\UserInformation;
 
-class RequestParameterTest extends \PHPUnit_Framework_TestCase {
-    public function testMagicGetSet() {
+class RequestParameterTest extends \PHPUnit_Framework_TestCase
+{
+    public function testMagicGetSet()
+    {
         $o = new RequestParameter();
         $o->utt = 'あいうえお';
         $this->assertEquals('あいうえお', $o->utt);
@@ -29,13 +33,15 @@ class RequestParameterTest extends \PHPUnit_Framework_TestCase {
         $this->assertNull($o->hoge);
     }
 
-    public function testUnknownKeySet() {
+    public function testUnknownKeySet()
+    {
         $this->setExpectedException('\jp3cki\docomoDialogue\InvalidArgumentException');
         $o = new RequestParameter();
         $o->hoge = 42;
     }
 
-    public function testUserInput() {
+    public function testUserInput()
+    {
         $o = new RequestParameter();
         $p = $o->setUserInput('あいうえお');
         $this->assertTrue($o === $p); // returns $this
@@ -49,12 +55,14 @@ class RequestParameterTest extends \PHPUnit_Framework_TestCase {
     /**
      * @expectedException jp3cki\docomoDialogue\DomainError
      */
-    public function testUserInputLengthException() {
+    public function testUserInputLengthException()
+    {
         $o = new RequestParameter();
         $o->setUserInput(str_repeat('あ', 256));
     }
 
-    public function testContext() {
+    public function testContext()
+    {
         $o = new RequestParameter();
         $p = $o->setContext('abcdefg');
         $this->assertTrue($o === $p); // returns $this
@@ -68,12 +76,14 @@ class RequestParameterTest extends \PHPUnit_Framework_TestCase {
     /**
      * @expectedException jp3cki\docomoDialogue\DomainError
      */
-    public function testContextLengthException() {
+    public function testContextLengthException()
+    {
         $o = new RequestParameter();
         $o->setContext(str_repeat('a', 256));
     }
 
-    public function testMode() {
+    public function testMode()
+    {
         $o = new RequestParameter();
         $p = $o->setMode(RequestParameter::MODE_DIALOG);
         $this->assertTrue($o === $p); // returns $this
@@ -86,41 +96,53 @@ class RequestParameterTest extends \PHPUnit_Framework_TestCase {
     /**
      * @expectedException jp3cki\docomoDialogue\DomainError
      */
-    public function testModeException() {
+    public function testModeException()
+    {
         $o = new RequestParameter();
         $o->setMode('hoge');
     }
 
-    public function testCharacter() {
+    public function testCharacter()
+    {
         $o = new RequestParameter();
         $p = $o->setCharacter(RequestParameter::CHARACTER_KANSAI);
         $this->assertTrue($o === $p); // returns $this
         $this->assertEquals(RequestParameter::CHARACTER_KANSAI, $o->getCharacter());
         $this->assertEquals(RequestParameter::CHARACTER_KANSAI, $o->t);
-        $this->assertEquals(RequestParameter::CHARACTER_BABY, $o->setCharacter(RequestParameter::CHARACTER_BABY)->getCharacter());
-        $this->assertEquals(RequestParameter::CHARACTER_DEFAULT, $o->setCharacter(RequestParameter::CHARACTER_DEFAULT)->getCharacter());
+        $this->assertEquals(
+            RequestParameter::CHARACTER_BABY,
+            $o->setCharacter(RequestParameter::CHARACTER_BABY)->getCharacter()
+        );
+        $this->assertEquals(
+            RequestParameter::CHARACTER_DEFAULT,
+            $o->setCharacter(RequestParameter::CHARACTER_DEFAULT)->getCharacter()
+        );
     }
 
     /**
      * @expectedException jp3cki\docomoDialogue\DomainError
      */
-    public function testCharacterException() {
+    public function testCharacterException()
+    {
         $o = new RequestParameter();
         $o->setCharacter('hoge');
     }
 
-    public function testUserInformation() {
+    public function testUserInformation()
+    {
         $o = new RequestParameter();
         // デフォルトでちゃんと返ってくる
         $this->assertInstanceOf(UserInformation::className(), $o->getuserInformation());
     }
 
-    public function testMakeParameter() {
+    public function testMakeParameter()
+    {
         $o = new RequestParameter();
         $this->assertTrue(is_array($o->makeParameter()));
     }
 
-    public function testReset() {
+    public function testReset()
+    {
         $o = new RequestParameter();
         $o->setUserInput('あいうえお');
         $this->assertEquals('あいうえお', $o->getUserInput());
@@ -128,7 +150,8 @@ class RequestParameterTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(null, $o->getUserInput());
     }
 
-    public function testToString() {
+    public function testToString()
+    {
         $o = new RequestParameter();
         $o->setUserInput('あいうえお');
         $this->assertTrue(is_string($o->__toString()));

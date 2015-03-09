@@ -8,6 +8,7 @@
  */
 
 namespace jp3cki\docomoDialogue;
+
 use stdClass;
 
 /**
@@ -19,7 +20,8 @@ use stdClass;
  * @property-read string $mode           会話モード
  * @property-read int    $da             ユーザとシステムの対話に対してサーバが付与した番号
  */
-class Response {
+class Response
+{
     /** @internal */
     private $parameters = [
         'utt'       => null,
@@ -34,14 +36,15 @@ class Response {
      *
      * @param \stdClass $response サーバからの応答をJSONデコードしたもの
      */
-    public function __construct(stdClass $response) {
-        foreach(['utt', 'yomi', 'mode', 'context'] as $key) {
-            if(isset($response->$key)) {
+    public function __construct(stdClass $response)
+    {
+        foreach (['utt', 'yomi', 'mode', 'context'] as $key) {
+            if (isset($response->$key)) {
                 $this->parameters[$key] = (string)$response->$key;
             }
         }
-        foreach(['da'] as $key) {
-            if(isset($response->$key)) {
+        foreach (['da'] as $key) {
+            if (isset($response->$key)) {
                 $this->parameters[$key] = (int)(string)$response->$key;
             }
         }
@@ -55,10 +58,11 @@ class Response {
      *
      * @return string
      */
-    public function __toString() {
+    public function __toString()
+    {
         $data = [];
-        foreach($this->parameters as $k => $v) {
-            if($v !== null) {
+        foreach ($this->parameters as $k => $v) {
+            if ($v !== null) {
                 $data[$k] = $v;
             }
         }
@@ -71,13 +75,19 @@ class Response {
      * @param   string  $key    プロパティ取得用のキー
      * @return  string          キーに対応する値
      */
-    public function __get($key) {
+    public function __get($key)
+    {
         switch($key) {
-        case 'utt':     return $this->getText();
-        case 'yomi':    return $this->getYomi();
-        case 'context': return $this->getContext();
-        case 'mode':    return $this->getMode();
-        case 'da':      return $this->getNumber();
+            case 'utt':
+                return $this->getText();
+            case 'yomi':
+                return $this->getYomi();
+            case 'context':
+                return $this->getContext();
+            case 'mode':
+                return $this->getMode();
+            case 'da':
+                return $this->getNumber();
         }
     }
 
@@ -86,7 +96,8 @@ class Response {
      *
      * @return string
      */
-    public function getText() {
+    public function getText()
+    {
         return $this->parameters['utt'];
     }
 
@@ -95,7 +106,8 @@ class Response {
      *
      * @return string
      */
-    public function getYomi() {
+    public function getYomi()
+    {
         return $this->parameters['yomi'];
     }
 
@@ -104,7 +116,8 @@ class Response {
      *
      * @return string
      */
-    public function getContext() {
+    public function getContext()
+    {
         return $this->parameters['context'];
     }
 
@@ -113,7 +126,8 @@ class Response {
      *
      * @return string
      */
-    public function getMode() {
+    public function getMode()
+    {
         return $this->parameters['mode'];
     }
 
@@ -122,7 +136,8 @@ class Response {
      *
      * @return int
      */
-    public function getNumber() {
+    public function getNumber()
+    {
         return $this->parameters['da'];
     }
 
@@ -131,7 +146,8 @@ class Response {
      *
      * return string
      */
-    public static function className() {
+    public static function className()
+    {
         return get_called_class();
     }
 }

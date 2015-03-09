@@ -7,12 +7,14 @@
  */
 
 namespace jp3cki\docomoDialogue\validators;
+
 use jp3cki\docomoDialogue\DomainError;
 
 /**
- * 文字列のバリデータ   
+ * 文字列のバリデータ
  */
-class String {
+class String
+{
     /**
      * 文字列を検査する
      *
@@ -22,8 +24,9 @@ class String {
      *
      * @throws  \jp3cki\docomoDialogue\DomainError
      */
-    public static function validate($value, $maxLen, $errorMessage) {
-        if(mb_strlen($value, 'UTF-8') <= $maxLen) {
+    public static function validate($value, $maxLen, $errorMessage)
+    {
+        if (mb_strlen($value, 'UTF-8') <= $maxLen) {
             return true;
         }
         throw new DomainError($errorMessage);
@@ -34,7 +37,8 @@ class String {
      *
      * return string
      */
-    public static function className() {
+    public static function className()
+    {
         return get_called_class();
     }
 }

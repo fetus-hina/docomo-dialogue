@@ -18,7 +18,8 @@ namespace jp3cki\docomoDialogue;
  * @property int    $t              チャットキャラクター
  * @property UserInformation $user  ユーザ情報
  */
-class RequestParameter {
+class RequestParameter
+{
     /** デフォルトのキャラクター */
     const CHARACTER_DEFAULT = null;
     /** 関西弁のキャラクター */
@@ -40,7 +41,8 @@ class RequestParameter {
     /**
      * コンストラクタ
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->reset();
     }
 
@@ -52,7 +54,8 @@ class RequestParameter {
      *
      * @return string
      */
-    public function __toString() {
+    public function __toString()
+    {
         return json_encode($this->makeParameter(), JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
     }
 
@@ -62,13 +65,19 @@ class RequestParameter {
      * @param   string  $key    プロパティ取得用のキー
      * @return  string          キーに対応する値
      */
-    public function __get($key) {
+    public function __get($key)
+    {
         switch($key) {
-        case 'utt':                 return $this->getUserInput();
-        case 'context':             return $this->getContext();
-        case 'mode':                return $this->getMode();
-        case 't':                   return $this->getCharacter();
-        case 'user':                return $this->getUserInformation();
+            case 'utt':
+                return $this->getUserInput();
+            case 'context':
+                return $this->getContext();
+            case 'mode':
+                return $this->getMode();
+            case 't':
+                return $this->getCharacter();
+            case 'user':
+                return $this->getUserInformation();
         }
     }
 
@@ -81,14 +90,21 @@ class RequestParameter {
      * @throws  InvalidArgumentException    対応するキーが存在しない時
      * @throws  DomainError                 設定する値が異常な時
      */
-    public function __set($key, $value) {
+    public function __set($key, $value)
+    {
         switch($key) {
-        case 'utt':                 return $this->setUserInput($value);
-        case 'context':             return $this->setContext($value);
-        case 'mode':                return $this->setMode($value);
-        case 't':                   return $this->setCharacter($value);
-        case 'user':                return $this->setUserInformation($value);
-        default:                    throw new InvalidArgumentException("Unknown key {$key}");
+            case 'utt':
+                return $this->setUserInput($value);
+            case 'context':
+                return $this->setContext($value);
+            case 'mode':
+                return $this->setMode($value);
+            case 't':
+                return $this->setCharacter($value);
+            case 'user':
+                return $this->setUserInformation($value);
+            default:
+                throw new InvalidArgumentException("Unknown key {$key}");
         }
     }
 
@@ -97,7 +113,8 @@ class RequestParameter {
      *
      * return self
      */
-    public function reset() {
+    public function reset()
+    {
         $this->parameters = [
             'utt'       => null,
             'context'   => null,
@@ -113,7 +130,8 @@ class RequestParameter {
      *
      * @return string
      */
-    public function getUserInput() {
+    public function getUserInput()
+    {
         return $this->parameters['utt'];
     }
 
@@ -122,7 +140,8 @@ class RequestParameter {
      *
      * @return string
      */
-    public function getContext() {
+    public function getContext()
+    {
         return $this->parameters['context'];
     }
 
@@ -131,7 +150,8 @@ class RequestParameter {
      *
      * @return string
      */
-    public function getMode() {
+    public function getMode()
+    {
         return $this->parameters['mode'];
     }
 
@@ -140,7 +160,8 @@ class RequestParameter {
      *
      * @return int
      */
-    public function getCharacter() {
+    public function getCharacter()
+    {
         return $this->parameters['t'];
     }
 
@@ -149,8 +170,9 @@ class RequestParameter {
      *
      * @return UserInformation
      */
-    public function getUserInformation() {
-        if(!$this->user_info) {
+    public function getUserInformation()
+    {
+        if (!$this->user_info) {
             $this->user_info = new UserInformation();
         }
         return $this->user_info;
@@ -163,7 +185,8 @@ class RequestParameter {
      * @return  self
      * @throws  DomainError
      */
-    public function setUserInput($value) {
+    public function setUserInput($value)
+    {
         validators\String::validate($value, 255, 'User input too long');
         $value = mb_substr($value, 0, 255, 'UTF-8');
         $this->parameters['utt'] = $value;
@@ -176,7 +199,8 @@ class RequestParameter {
      * @param   string  $value          コンテキストID
      * @return  self
      */
-    public function setContext($value) {
+    public function setContext($value)
+    {
         validators\String::validate($value, 255, 'Context id too long');
         $value = mb_substr($value, 0, 255, 'UTF-8');
         $this->parameters['context'] = $value;
@@ -189,11 +213,11 @@ class RequestParameter {
      * @param   string  $value          対話モード  MODE_DIALOG | MODE_SRTR
      * @return  self
      */
-    public function setMode($value) {
-        if($value !== null &&
+    public function setMode($value)
+    {
+        if ($value !== null &&
            $value !== self::MODE_DIALOG &&
-           $value !== self::MODE_SRTR)
-        {
+           $value !== self::MODE_SRTR) {
             throw new DomainError('Invalid mode');
         }
         $this->parameters['mode'] = $value;
@@ -206,11 +230,11 @@ class RequestParameter {
      * @param   int     $value          キャラクタID    CHARACTER_DEFAULT | CHARACTER_KANSAI | CHARACTER_BABY
      * @return  self
      */
-    public function setCharacter($value) {
-        if($value !== self::CHARACTER_DEFAULT &&
+    public function setCharacter($value)
+    {
+        if ($value !== self::CHARACTER_DEFAULT &&
            $value !== self::CHARACTER_KANSAI &&
-           $value !== self::CHARACTER_BABY)
-        {
+           $value !== self::CHARACTER_BABY) {
             throw new DomainError('Invalid character');
         }
         $this->parameters['t'] = $value;
@@ -223,7 +247,8 @@ class RequestParameter {
      * @param   UserInformation $value      ユーザ情報
      * @return  self
      */
-    public function setUserInformation(UserInformation $value) {
+    public function setUserInformation(UserInformation $value)
+    {
         $this->user_info = $value;
         return $this;
     }
@@ -233,10 +258,11 @@ class RequestParameter {
      *
      * @return  array
      */
-    public function makeParameter() {
+    public function makeParameter()
+    {
         $ret = [];
-        foreach($this->parameters as $k => $v) {
-            if($v !== null) {
+        foreach ($this->parameters as $k => $v) {
+            if ($v !== null) {
                 $ret[$k] = $v;
             }
         }
@@ -248,7 +274,8 @@ class RequestParameter {
      *
      * return string
      */
-    public static function className() {
+    public static function className()
+    {
         return get_called_class();
     }
 }
