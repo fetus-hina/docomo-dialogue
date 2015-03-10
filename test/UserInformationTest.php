@@ -65,6 +65,8 @@ class UserInformationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(UserInformation::SEX_MALE, $o->sex);
         $this->assertEquals(UserInformation::SEX_FEMALE, $o->setSex(UserInformation::SEX_FEMALE)->getSex());
         $this->assertEquals(UserInformation::SEX_OTHERS, $o->setSex(UserInformation::SEX_OTHERS)->getSex());
+        $o->sex = UserInformation::SEX_MALE;
+        $this->assertEquals(UserInformation::SEX_MALE, $o->sex);
     }
 
     /**
@@ -99,6 +101,8 @@ class UserInformationTest extends \PHPUnit_Framework_TestCase
             UserInformation::BLOOD_TYPE_UNKNOWN,
             $o->setBloodType(UserInformation::BLOOD_TYPE_UNKNOWN)->getBloodType()
         );
+        $o->bloodtype = UserInformation::BLOOD_TYPE_A;
+        $this->assertEquals(UserInformation::BLOOD_TYPE_A, $o->getBloodType());
     }
 
     /**
@@ -118,6 +122,8 @@ class UserInformationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(2000, $o->getBirthdateY());
         $this->assertEquals(2000, $o->birthdate_y);
         $this->assertEquals(1, $o->setBirthdateY(1)->getBirthdateY());
+        $o->birthdate_y = 2015;
+        $this->assertEquals(2015, $o->birthdate_y);
     }
 
     /**
@@ -156,6 +162,8 @@ class UserInformationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(10, $o->setBirthdateM(10)->getBirthdateM());
         $this->assertEquals(11, $o->setBirthdateM(11)->getBirthdateM());
         $this->assertEquals(12, $o->setBirthdateM(12)->getBirthdateM());
+        $o->birthdate_m = 1;
+        $this->assertEquals(1, $o->birthdate_m);
     }
 
     /**
@@ -184,6 +192,8 @@ class UserInformationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $o->getBirthdateD());
         $this->assertEquals(1, $o->birthdate_d);
         $this->assertEquals(31, $o->setBirthdateD(31)->getBirthdateD());
+        $o->birthdate_d = 10;
+        $this->assertEquals(10, $o->birthdate_d);
     }
 
     /**
@@ -212,6 +222,8 @@ class UserInformationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(42, $o->getAge());
         $this->assertEquals(42, $o->age);
         $this->assertEquals(1, $o->setAge(1)->getAge());
+        $o->age = 10;
+        $this->assertEquals(10, $o->age);
     }
 
     /**
@@ -275,6 +287,9 @@ class UserInformationTest extends \PHPUnit_Framework_TestCase
             $o->setConstellations(UserInformation::CONSTELLATION_PISCES)->getConstellations()
         );
         $this->assertEquals(null, $o->setConstellations(null)->getConstellations());
+
+        $o->constellations = UserInformation::CONSTELLATION_ARIES;
+        $this->assertEquals(UserInformation::CONSTELLATION_ARIES, $o->constellations);
     }
 
     /**
@@ -295,6 +310,8 @@ class UserInformationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('東京', $o->place);
         $this->assertEquals('宇都宮', $o->setPlace('宇都宮')->getPlace());
         $this->assertEquals(null, $o->setPlace(null)->getPlace());
+        $o->place = '東京';
+        $this->assertEquals('東京', $o->place);
     }
 
     /**
@@ -310,5 +327,18 @@ class UserInformationTest extends \PHPUnit_Framework_TestCase
     {
         $o = new UserInformation();
         $this->assertTrue(is_array($o->makeParameter()));
+    }
+
+    public function testUnknownKeyGet()
+    {
+        $o = new UserInformation();
+        $this->assertNull($o->unknownKey);
+    }
+
+    public function testUnknownKeySet()
+    {
+        $this->setExpectedException('jp3cki\docomoDialogue\InvalidArgumentException');
+        $o = new UserInformation();
+        $o->unknownKey = 42;
     }
 }

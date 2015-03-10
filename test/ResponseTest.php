@@ -25,6 +25,8 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('dialog', $o->mode);
         $this->assertEquals(0, $o->da);
         $this->assertEquals('aaabbb111222', $o->context);
+
+        $this->assertNull($o->unknownKey);
     }
 
     // issue #2
