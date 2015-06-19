@@ -7,6 +7,7 @@ docomo-dialogue
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/fetus-hina/docomo-dialogue/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/fetus-hina/docomo-dialogue/?branch=master)
 [![Code Climate](https://codeclimate.com/github/fetus-hina/docomo-dialogue/badges/gpa.svg)](https://codeclimate.com/github/fetus-hina/docomo-dialogue)
 [![Test Coverage](https://codeclimate.com/github/fetus-hina/docomo-dialogue/badges/coverage.svg)](https://codeclimate.com/github/fetus-hina/docomo-dialogue)
+[![Dependency Status](https://www.versioneye.com/user/projects/54d3265a3ca0840b19000153/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54d3265a3ca0840b19000153)
 
 [NTT docomo](https://www.nttdocomo.co.jp/) から提供されている、
 [雑談対話API](https://www.nttdocomo.co.jp/service/developer/smart_phone/analysis/chat/)のラッパーです。
