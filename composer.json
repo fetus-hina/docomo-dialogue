@@ -4,7 +4,7 @@
     "description": "Wrapper for dialogue API by NTT docomo.",
     "keywords": ["docomo", "dialogue", "api", "rest"],
     "license": "MIT",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "authors": [
         {
             "name": "AIZAWA Hina",
