@@ -13,7 +13,7 @@ use jp3cki\docomoDialogue\DomainError;
 /**
  * 文字列のバリデータ
  */
-class String
+class Text
 {
     /**
      * 文字列を検査する

@@ -306,7 +306,7 @@ class UserInformation
      */
     public function setNickname($value)
     {
-        validators\String::validate($value, 10, 'nickname too long');
+        validators\Text::validate($value, 10, 'nickname too long');
         $this->parameters['nickname'] = mb_substr($value, 0, 10, 'UTF-8');
         return $this;
     }
@@ -320,7 +320,7 @@ class UserInformation
      */
     public function setNicknameY($value)
     {
-        validators\String::validate($value, 20, 'nickname(yomi) too long');
+        validators\Text::validate($value, 20, 'nickname(yomi) too long');
         $value = mb_substr($value, 0, 20, 'UTF-8');
         if (!preg_match('/^[゠-ヿ]+$/u', $value)) {
             throw new DomainError('nickname(yomi) accept only katakana');

@@ -1,14 +1,14 @@
 <?php
 namespace jp3cki\docomoDialogue\test\validators;
 
-use jp3cki\docomoDialogue\validators\String as StringValidator;
+use jp3cki\docomoDialogue\validators\Text as TextValidator;
 use jp3cki\docomoDialogue\DomainError;
 
-class StringTest extends \PHPUnit_Framework_TestCase
+class TextTest extends \PHPUnit_Framework_TestCase
 {
     public function testClassName()
     {
-        $this->assertEquals('jp3cki\docomoDialogue\validators\String', StringValidator::className());
+        $this->assertEquals('jp3cki\docomoDialogue\validators\Text', TextValidator::className());
     }
 
     /**
@@ -19,7 +19,7 @@ class StringTest extends \PHPUnit_Framework_TestCase
         if (!$successful) {
             $this->setExpectedException(DomainError::className());
         }
-        $ret = StringValidator::validate($value, $maxLength, 'ERROR');
+        $ret = TextValidator::validate($value, $maxLength, 'ERROR');
         $this->assertTrue($ret);
     }
 

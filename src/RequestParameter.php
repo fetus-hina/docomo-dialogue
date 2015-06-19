@@ -187,7 +187,7 @@ class RequestParameter
      */
     public function setUserInput($value)
     {
-        validators\String::validate($value, 255, 'User input too long');
+        validators\Text::validate($value, 255, 'User input too long');
         $value = mb_substr($value, 0, 255, 'UTF-8');
         $this->parameters['utt'] = $value;
         return $this;
@@ -201,7 +201,7 @@ class RequestParameter
      */
     public function setContext($value)
     {
-        validators\String::validate($value, 255, 'Context id too long');
+        validators\Text::validate($value, 255, 'Context id too long');
         $value = mb_substr($value, 0, 255, 'UTF-8');
         $this->parameters['context'] = $value;
         return $this;
