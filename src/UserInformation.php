@@ -134,7 +134,7 @@ class UserInformation
      */
     public function __get($key)
     {
-        switch($key) {
+        switch ($key) {
             case 'nickname':
                 return $this->getNickname();
             case 'nickname_y':
@@ -171,7 +171,7 @@ class UserInformation
      */
     public function __set($key, $value)
     {
-        switch($key) {
+        switch ($key) {
             case 'nickname':
                 return $this->setNickname($value);
             case 'nickname_y':

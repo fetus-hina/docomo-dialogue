@@ -77,7 +77,7 @@ class Response
      */
     public function __get($key)
     {
-        switch($key) {
+        switch ($key) {
             case 'utt':
                 return $this->getText();
             case 'yomi':

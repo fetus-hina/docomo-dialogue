@@ -46,7 +46,7 @@ class Dialogue
      */
     public function __get($key)
     {
-        switch($key) {
+        switch ($key) {
             case 'apikey':
                 return $this->apikey;
             case 'parameter':

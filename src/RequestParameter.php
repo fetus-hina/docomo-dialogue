@@ -67,7 +67,7 @@ class RequestParameter
      */
     public function __get($key)
     {
-        switch($key) {
+        switch ($key) {
             case 'utt':
                 return $this->getUserInput();
             case 'context':
@@ -92,7 +92,7 @@ class RequestParameter
      */
     public function __set($key, $value)
     {
-        switch($key) {
+        switch ($key) {
             case 'utt':
                 return $this->setUserInput($value);
             case 'context':
