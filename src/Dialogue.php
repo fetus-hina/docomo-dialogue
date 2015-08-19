@@ -81,7 +81,7 @@ class Dialogue
         $curl->setHeader('Content-Type', 'application/json; charset=UTF-8');
         $ret = $curl->post($reqUrl, $reqBody);
         if ($curl->error) {
-            trigger_error('docomo dialogue: Error ' . $curl->error_code . ': ' . $curl->error_message, E_USER_WARNING);
+            trigger_error('docomo dialogue: Error ' . $curl->errorCode . ': ' . $curl->errorMessage, E_USER_WARNING);
             return false;
         }
         return new Response($ret);

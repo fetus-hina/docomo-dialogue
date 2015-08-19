@@ -16,7 +16,7 @@
         "ext-mbstring": "*",
         "ext-pcre": "*",
         "ext-intl": "*",
-        "php-curl-class/php-curl-class": "^3.5"
+        "php-curl-class/php-curl-class": "^4.6"
     },
     "require-dev": {
         "apigen/apigen": "^4.1",
